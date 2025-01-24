@@ -1,7 +1,6 @@
 from importlib.resources import read_binary
 from itertools import product
 from django.shortcuts import render
-from pyparsing import Or
 
 from bot.models import BotUsers, Branch, Order, Order_items
 from datetime import datetime, date, timedelta
@@ -123,7 +122,7 @@ def statistics(request, period=None):
 
 
     context = {"branches": branches, "label": label}
-    return render(request, "admin_lte/statistics.html", context)
+    return render(request, "statistics.html", context)
 
 def statisticss(request, period=None):
     once_done = False

@@ -24,5 +24,5 @@ urlpatterns = [
     path('statistics/', include('api.urls')),
     path('zakaz/', include('zakaz.urls')),
     path('', include('dashboard.urls')),
-    path('', include('smm.urls'))
+    # path('', include('smm.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

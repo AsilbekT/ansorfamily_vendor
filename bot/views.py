@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 import requests
-import pyrebase
 from django.core.exceptions import ObjectDoesNotExist
 import json
 import time
@@ -81,6 +80,7 @@ def receive_request(request):
     return HttpResponse("salom")
 
 def check_if_group_available(message):
+    print("herea")
     if "message" in message.keys():
         group_id = message['message']['chat']['id']
         group_name = message['message']['chat']['title']
@@ -94,7 +94,7 @@ def hook(request):
         message = {}
         user_id = 0
         telegram_message = json.loads(request.body)
-        message_type = 'a'
+        # message_type = 'a'
         # if "message" in telegram_message.keys():
         #     message_type = telegram_message['message']['chat']['type']
         # else:
@@ -182,9 +182,9 @@ def hook(request):
 
 @require_http_methods(["GET", "POST"])
 def setwebhook(request):
-    response = requests.post(API_ENDPOINT + "setWebhook?url=" + URL).json()
-    return HttpResponse(f"{response}")
-
+    full_url = API_ENDPOINT + "setWebhook?url=" + URL
+    response = requests.post(full_url).json()
+    return HttpResponse(str(response))
 
 def bot_request(method, data):
     return requests.post(API_ENDPOINT + method, data)
@@ -1598,7 +1598,7 @@ def replyHandler(message, check=None):
     location_telegram = {"latitude": 0, 'longitude': 0}
     if 'location' in message.keys():
         location_telegram = message['location']
-        geolocator = Nominatim(user_agent="geoapiExercises")
+        geolocator = Nominatim(user_agent="camuf-pizza-geo")
         Latitude = f"{location_telegram['latitude']}"
         Longitude = f"{location_telegram['longitude']}"
         # {'latitude': 40.445419, 'longitude': 71.942576}
@@ -1817,8 +1817,9 @@ def send_to_channel(message, lat, long, text, order_type, ordered_user_id=0):
     user_id = message['from']['id']
     user = BotUsers.objects.get(user_id=user_id)
     telegram_group_id = user.branch.telegram_group_id
+    print('here sending location ->', telegram_group_id)
 
-    bot_request("sendMessage", {
+    res = bot_request("sendMessage", {
         'chat_id': telegram_group_id,
         'parse_mode': 'html',
         'text': text,
@@ -1836,14 +1837,13 @@ def send_to_channel(message, lat, long, text, order_type, ordered_user_id=0):
                 }
             )
         })
-    
+    print(res.json())
     type = t('dastavka', message=message)
     if order_type == type:
         bot_request("sendLocation", {
             'chat_id': user.branch.telegram_group_id,
             'latitude': lat,
             'longitude': long,
-            
             })
             
 

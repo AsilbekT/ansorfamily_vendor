@@ -1,10 +1,8 @@
 from django.db import models
-from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Post(models.Model):
      post_title = models.CharField(max_length=1000)
-     post_body = RichTextField(blank=True, null=True)
      videofile = models.FileField(upload_to='videos/', blank=True, default='default.mp4')
 
      # post_body = models.TextField(default='', blank=True)
