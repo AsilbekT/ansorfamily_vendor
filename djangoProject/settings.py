@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-!^cv@v6xnojdmi)g)-$iv#=&4eq@&yumitg^6t7&%!fc*@ijyl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = [
-    "https://ansorfamily.uz",
+    "https://camu-bot.ataxi.uz",
     # "localhost",
     # "127.0.0.1:8000",
     '*'
@@ -49,7 +49,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djangoProject.urls'
-CSRF_TRUSTED_ORIGINS = ['https://ansorfamily.uz', 'http://ansorfamily.isaak.uz']
+CSRF_TRUSTED_ORIGINS = ['https://camu-bot.ataxi.uz', 'http://camu-bot.ataxi.uz']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
